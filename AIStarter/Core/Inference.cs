@@ -84,7 +84,8 @@ namespace AIStarter.Core
                 "image/gif" => ".gif",
                 "text/plain" => ".txt",
                 "audio/wav" => ".wav",  
-                "audio/mpeg" => ".mp3",
+                "audio/mpeg" => ".mp3",               
+                "video/mp4" => ".mp4",  
                 "application/pdf" => ".pdf",
                 _ => throw new NotSupportedException($"Unsupported data type: {dataType}")
             };

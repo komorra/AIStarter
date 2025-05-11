@@ -54,6 +54,7 @@ namespace AIStarter.UI
 
         private async void Run_Click(object sender, RoutedEventArgs e)
         {
+            Run.IsEnabled = false;
             if (Input.Content is StackPanel panel)
             {
                 var jsonInput = JObject.Parse(ModelInputJSON ?? string.Empty);  
@@ -71,7 +72,8 @@ namespace AIStarter.UI
 
                 var result = await Inference.Run(dockerCommand, jsonInput.ToString(), prediction);
                 var outputFile = Inference.OutputDataToTempFile(result);
-            }            
+            }
+            Run.IsEnabled = true;
         }
     }
 }
