@@ -9,6 +9,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AIStarter.UI;
+using Path = System.IO.Path;
 
 namespace AIStarter
 {
@@ -31,6 +32,15 @@ namespace AIStarter
             if (result == true)
             {
                 var modelFileName = selectModelWindow.SelectedModelFileName;
+
+                var controlModelCell = new ControlModelCell();
+                controlModelCell.ModelName = Path.GetFileNameWithoutExtension(modelFileName) ?? string.Empty;
+                controlModelCell.ModelFile = modelFileName ?? string.Empty;
+                controlModelCell.DataContext = controlModelCell;
+                controlModelCell.HorizontalAlignment = HorizontalAlignment.Stretch;
+
+                ModelPanel.Children.Add(controlModelCell);
+
             }            
         }
     }

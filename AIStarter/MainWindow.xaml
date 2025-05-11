@@ -19,5 +19,9 @@
                 <Image Source="Images/options_icon.png" Width="80" Height="80" Margin="5"/>
             </Button>
         </StackPanel>
+        <StackPanel Name="ModelPanel" Grid.Column="1" Orientation="Vertical" Margin="10">
+            <TextBlock Text="Welcome to AI Starter!" FontSize="24" FontWeight="Bold" Foreground="White" Margin="5"/>
+            <TextBlock Text="Select a model to start using it." FontSize="16" Foreground="White" Margin="5"/>
+        </StackPanel>
     </Grid>
 </Window>

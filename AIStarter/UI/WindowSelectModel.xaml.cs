@@ -56,6 +56,11 @@ namespace AIStarter.UI
 
         private void Select_Click(object sender, RoutedEventArgs e)
         {
+            if(string.IsNullOrEmpty(SelectedModelFileName))
+            {
+                DialogResult = false; // Set the dialog result to false if no model is selected
+                return;
+            }
             DialogResult = true; // Set the dialog result to true when the button is clicked
         }
     }
