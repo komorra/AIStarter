@@ -62,8 +62,14 @@ namespace AIStarter.UI
                 foreach (ISlot item in panel.Children)
                 {
                     var token = jsonInput.SelectToken(item.ValueJSONPath ?? string.Empty);
-                    token.Replace(item.Value ?? string.Empty);
+                    token.Replace(SimpleHttpFileServer.ConvertToLocalhostIfNeeded(item.Value ?? string.Empty));
                 }
+
+                do
+                {
+                    await Task.Delay(1000);
+                }
+                while (!SimpleHttpFileServer.Instance.Running);
 
                 var modelDataLines = modelData.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
                 var dockerCommand = modelDataLines.FirstOrDefault(line => line.StartsWith("docker run", StringComparison.OrdinalIgnoreCase))?.Trim() ?? string.Empty;
@@ -74,6 +80,6 @@ namespace AIStarter.UI
                 var outputFile = Inference.OutputDataToTempFile(result);
             }
             Run.IsEnabled = true;
-        }
+        }        
     }
 }

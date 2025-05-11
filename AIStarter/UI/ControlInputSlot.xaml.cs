@@ -30,5 +30,26 @@ namespace AIStarter.UI
         {
             InitializeComponent();
         }
+
+        private void TextBox_Drop(object sender, DragEventArgs e)
+        {
+            if(e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                var filePath = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+                Value = filePath;                
+                UrlTextBox.Text = filePath;
+
+                e.Handled = true;
+            }
+        }
+
+        private void TextBox_PreviewDragOver(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                e.Effects = DragDropEffects.Copy;
+                e.Handled = true;
+            }
+        }
     }
 }
