@@ -1,6 +1,8 @@
-﻿using System;
+﻿using AIStarter.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -18,10 +20,10 @@ namespace AIStarter.UI
     /// <summary>
     /// Logika interakcji dla klasy ControlInputSlot.xaml
     /// </summary>
-    public partial class ControlInputSlot : UserControl
+    public partial class ControlInputSlot : UserControl, ISlot
     {
         public string InputName { get; set; } = string.Empty;
-        public string InputValue { get; set; } = string.Empty;
+        public string Value { get; set; } = string.Empty;
         public string ValueJSONPath { get; set; } = string.Empty;
 
         public ControlInputSlot()

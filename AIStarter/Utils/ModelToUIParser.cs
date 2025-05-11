@@ -33,7 +33,7 @@ namespace AIStarter.Utils
 
                     var inputSlot = new ControlInputSlot();
                     inputSlot.InputName = name.ToString();
-                    inputSlot.InputValue = value.ToString();
+                    inputSlot.Value = value.ToString();
                     inputSlot.DataContext = inputSlot;
                     inputSlot.ValueJSONPath = $"input.{name}";
 

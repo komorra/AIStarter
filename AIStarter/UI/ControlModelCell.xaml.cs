@@ -1,4 +1,7 @@
-﻿using AIStarter.Utils;
+﻿using AIStarter.Core;
+using AIStarter.Interfaces;
+using AIStarter.Utils;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,6 +30,8 @@ namespace AIStarter.UI
 
         public string? ModelInputJSON { get; private set; }
 
+        private string modelData = string.Empty;
+
         public ControlModelCell()
         {
             InitializeComponent();
@@ -35,7 +40,7 @@ namespace AIStarter.UI
 
         private void ControlModelCell_Loaded(object sender, RoutedEventArgs e)
         {
-            var modelData = File.ReadAllText(ModelFile);
+            modelData = File.ReadAllText(ModelFile);
             ModelInputJSON = ModelToUIParser.Populate(Input, modelData);
         }
 
@@ -47,9 +52,26 @@ namespace AIStarter.UI
             }
         }
 
-        private void Run_Click(object sender, RoutedEventArgs e)
+        private async void Run_Click(object sender, RoutedEventArgs e)
         {
+            if (Input.Content is StackPanel panel)
+            {
+                var jsonInput = JObject.Parse(ModelInputJSON ?? string.Empty);  
 
+                foreach (ISlot item in panel.Children)
+                {
+                    var token = jsonInput.SelectToken(item.ValueJSONPath ?? string.Empty);
+                    token.Replace(item.Value ?? string.Empty);
+                }
+
+                var modelDataLines = modelData.Split(new[] { Environment.NewLine }, StringSplitOptions.RemoveEmptyEntries);
+                var dockerCommand = modelDataLines.FirstOrDefault(line => line.StartsWith("docker run", StringComparison.OrdinalIgnoreCase))?.Trim() ?? string.Empty;
+                dockerCommand = dockerCommand.Replace("docker run", "", StringComparison.OrdinalIgnoreCase);
+                var prediction = modelDataLines.LastOrDefault()?.Trim() ?? string.Empty;
+
+                var result = await Inference.Run(dockerCommand, jsonInput.ToString(), prediction);
+                var outputFile = Inference.OutputDataToTempFile(result);
+            }            
         }
     }
 }
