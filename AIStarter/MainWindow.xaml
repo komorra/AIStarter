@@ -5,8 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AIStarter"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="AI Starter" Height="450" Width="800" Background="#FF141414" WindowState="Maximized">
     <Grid>
-
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical">
+            <Button Name="Models" Background="Black" Margin="5" ToolTip="Select ML model">
+                <Image Source="Images/ml_icon.png" Width="80" Height="80" Margin="5" />
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>

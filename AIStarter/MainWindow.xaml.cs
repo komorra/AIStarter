@@ -18,7 +18,7 @@ namespace AIStarter
     {
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();                  
         }
     }
 }

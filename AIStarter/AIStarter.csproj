@@ -8,4 +8,12 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Images\ml_icon.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Images\ml_icon.png" />
+  </ItemGroup>
+
 </Project>
