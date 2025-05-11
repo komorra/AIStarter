@@ -13,7 +13,7 @@ namespace AIStarter.Utils
 {
     internal static class ModelToUIParser
     {
-        public static void Populate(ContentControl slot, string modelData)
+        public static string? Populate(ContentControl slot, string modelData)
         {
             var match = Regex.Match(modelData, @"\$'(.*?)'", RegexOptions.Singleline);
 
@@ -35,12 +35,17 @@ namespace AIStarter.Utils
                     inputSlot.InputName = name.ToString();
                     inputSlot.InputValue = value.ToString();
                     inputSlot.DataContext = inputSlot;
+                    inputSlot.ValueJSONPath = $"input.{name}";
 
                     slotPanel.Children.Add(inputSlot);
                 }
 
                 slot.Content = slotPanel;
-            }            
+
+                return json;
+            }
+
+            return null;
         }
     }
 }

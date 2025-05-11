@@ -25,6 +25,8 @@ namespace AIStarter.UI
         public string ModelName { get; set; } = string.Empty;
         public string ModelFile { get; set; } = string.Empty;
 
+        public string? ModelInputJSON { get; private set; }
+
         public ControlModelCell()
         {
             InitializeComponent();
@@ -34,7 +36,7 @@ namespace AIStarter.UI
         private void ControlModelCell_Loaded(object sender, RoutedEventArgs e)
         {
             var modelData = File.ReadAllText(ModelFile);
-            ModelToUIParser.Populate(Inference, modelData);
+            ModelInputJSON = ModelToUIParser.Populate(Input, modelData);
         }
 
         private void Discard_Click(object sender, RoutedEventArgs e)
@@ -43,6 +45,11 @@ namespace AIStarter.UI
             {
                 parentPanel.Children.Remove(this);
             }
+        }
+
+        private void Run_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

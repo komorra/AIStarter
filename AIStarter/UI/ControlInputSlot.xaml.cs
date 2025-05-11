@@ -22,6 +22,7 @@ namespace AIStarter.UI
     {
         public string InputName { get; set; } = string.Empty;
         public string InputValue { get; set; } = string.Empty;
+        public string ValueJSONPath { get; set; } = string.Empty;
 
         public ControlInputSlot()
         {
