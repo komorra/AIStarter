@@ -4,6 +4,9 @@
              xmlns:local="clr-namespace:AIStarter"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <!-- Domyślny styl dla wszystkich Buttonów -->
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#FF373737"/>
+        </Style>
     </Application.Resources>
 </Application>
