@@ -5,17 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AIStarter"
         mc:Ignorable="d"
-        Title="AI Starter" Height="450" Width="800" Background="#FF141414" WindowState="Maximized">
+        Title="AI Starter" Height="450" Width="800" WindowState="Maximized" Background="{x:Null}">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel Orientation="Vertical">
-            <Button Name="Models" Margin="5" ToolTip="Select ML model">
+            <Button Name="Models" Margin="5" ToolTip="Select ML model" Click="Models_Click">
                 <Image Source="Images/ml_icon.png" Width="80" Height="80" Margin="5" />
             </Button>
-            <Button Name="Chat" Margin="5" ToolTip="Options">
+            <Button Name="Options" Margin="5" ToolTip="Options">
                 <Image Source="Images/options_icon.png" Width="80" Height="80" Margin="5"/>
             </Button>
         </StackPanel>

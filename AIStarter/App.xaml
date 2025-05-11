@@ -7,6 +7,11 @@
         <!-- Domyślny styl dla wszystkich Buttonów -->
         <Style TargetType="Button">
             <Setter Property="Background" Value="#FF373737"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="5"/>
+        </Style>
+        <Style TargetType="Window">
+            <Setter Property="Background" Value="#FF141414"/>
         </Style>
     </Application.Resources>
 </Application>

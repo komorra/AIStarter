@@ -8,6 +8,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AIStarter.UI;
 
 namespace AIStarter
 {
@@ -18,7 +19,19 @@ namespace AIStarter
     {
         public MainWindow()
         {
-            InitializeComponent();                  
+            InitializeComponent();
+        }
+
+        private void Models_Click(object sender, RoutedEventArgs e)
+        {
+            var selectModelWindow = new WindowSelectModel();
+            selectModelWindow.Owner = this; // Set the owner of the new window to the main window          
+            var result = selectModelWindow.ShowDialog();
+
+            if (result == true)
+            {
+                var modelFileName = selectModelWindow.SelectedModelFileName;
+            }            
         }
     }
 }
