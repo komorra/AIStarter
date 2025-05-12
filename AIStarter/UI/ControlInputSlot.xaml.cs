@@ -38,39 +38,16 @@ namespace AIStarter.UI
             set
             {
                 Visualisation.Child = null;
-                if (ResourceExists(value))
-                {
-                    TryVisualise(value);
-                }
+                TryVisualise(value);
                 this.value = value;
                 if (UrlTextBox.Text != value)
                 {
                     UrlTextBox.Text = value;
                 }
             }
-        }
+        }        
 
-        private bool ResourceExists(string value)
-        {
-            if(File.Exists(value))
-            {
-                return true;
-            }
-            else if(value.StartsWith("http"))
-            {
-                var content = new HttpClient().GetAsync(value);
-                content.Wait();
-
-                if(content.Result.StatusCode == HttpStatusCode.OK)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private void TryVisualise(string resourcePath)
+        private async Task TryVisualise(string resourcePath)
         {            
             if (File.Exists(resourcePath))
             {
@@ -90,10 +67,9 @@ namespace AIStarter.UI
             }
             else if (resourcePath.StartsWith("http"))
             {
-                var content = new HttpClient().GetAsync(resourcePath);
-                content.Wait();
+                var content = await new HttpClient().GetAsync(resourcePath);
 
-                if (content.Result.StatusCode == HttpStatusCode.OK)
+                if (content.StatusCode == HttpStatusCode.OK)
                 {
                     var image = new BitmapImage(new Uri(resourcePath));
                     var imageControl = new Image

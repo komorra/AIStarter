@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AIStarter.UI"
              mc:Ignorable="d" 
              d:DesignHeight="400" d:DesignWidth="800">
-    <Grid>
+    <Grid AllowDrop="True" PreviewDragOver="TextBox_PreviewDragOver" Drop="TextBox_Drop" >
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
@@ -19,7 +19,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="{Binding InputName}"/>
-            <TextBox Name="UrlTextBox" Grid.Column="1" Margin="5" AllowDrop="True" PreviewDragOver="TextBox_PreviewDragOver" Drop="TextBox_Drop" TextChanged="UrlTextBox_TextChanged"/>
+            <TextBox Name="UrlTextBox" Grid.Column="1" Margin="5" TextChanged="UrlTextBox_TextChanged"/>
             <Image Grid.Column="2"/>
         </Grid>
     </Grid>
