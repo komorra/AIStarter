@@ -76,7 +76,10 @@ namespace AIStarter.UI
                 dockerCommand = dockerCommand.Replace("docker run", "", StringComparison.OrdinalIgnoreCase);
                 var prediction = modelDataLines.LastOrDefault()?.Trim() ?? string.Empty;
 
-                var result = await Inference.Run(dockerCommand, jsonInput.ToString(), prediction);
+                var result = await Inference.Run(dockerCommand, jsonInput.ToString(), prediction, (s) =>
+                {
+                    ModelLog.Text += $"{s}{Environment.NewLine}";
+                });
                 var outputFile = Inference.OutputDataToTempFile(result);
 
                 OutputSlot.Value = outputFile;  

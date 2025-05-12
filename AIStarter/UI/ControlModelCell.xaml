@@ -34,6 +34,9 @@
                 </Grid>
             </TabItem>
             <TabItem Header="Model Log">
+                <ScrollViewer>
+                    <TextBlock Name="ModelLog" TextWrapping="Wrap" Margin="5" Foreground="White" FontSize="14"/>
+                </ScrollViewer>
             </TabItem>
         </TabControl>
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">

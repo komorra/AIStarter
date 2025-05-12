@@ -10,10 +10,9 @@ using System.Threading.Tasks;
 namespace AIStarter.Core
 {
     internal static class Inference
-    {
-        public static Action<string> Log { get; set; } = Console.WriteLine;
+    {        
 
-        public static async Task<string> Run(string dockerRunCommand, string inputJson, string predictionUrl)
+        public static async Task<string> Run(string dockerRunCommand, string inputJson, string predictionUrl, Action<string> log)
         {
             var fullDockerCommand = $"docker run {dockerRunCommand}";
             var processStartInfo = new System.Diagnostics.ProcessStartInfo("cmd.exe", "/c " + fullDockerCommand)
@@ -28,14 +27,17 @@ namespace AIStarter.Core
             {
                 process.StartInfo = processStartInfo;
                 process.Start();
-                var output = process.StandardOutput.ReadToEnd();
+                //var output = process.StandardOutput.ReadToEnd();
+                process.OutputDataReceived += (sender, e) => log(e.Data ?? "");
                 var error = process.StandardError.ReadToEnd();
                 await process.WaitForExitAsync();
                 if (process.ExitCode != 0)
                 {
-                    Log($"Error running Docker command: {error}");
+                    log($"Error running Docker command: {error}");
                 }                
             }
+
+            log("Retrieving prediction from Docker server...");
 
             var client = new HttpClient();
             var endpoint = predictionUrl;
@@ -51,7 +53,7 @@ namespace AIStarter.Core
 
             // Read the response
             var responseBody = await response.Content.ReadAsStringAsync();
-            Console.WriteLine(responseBody);
+            log("Response received from Docker server");
 
             var jsonResponse = JsonConvert.DeserializeObject<dynamic>(responseBody);
             var outputData = jsonResponse.output.ToString();
