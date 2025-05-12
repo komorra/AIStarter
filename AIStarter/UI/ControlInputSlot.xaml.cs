@@ -58,9 +58,9 @@ namespace AIStarter.UI
                     var imageControl = new Image
                     {
                         Source = image,
-                        Stretch = Stretch.Uniform,
-                        Width = 200,
-                        Height = 200
+                        Stretch = Stretch.Uniform,                        
+                        VerticalAlignment = VerticalAlignment.Stretch,
+                        HorizontalAlignment = HorizontalAlignment.Stretch
                     };
                     imageControl.Source = image;
                     Visualisation.Child = imageControl;
@@ -77,8 +77,8 @@ namespace AIStarter.UI
                     {
                         Source = image,
                         Stretch = Stretch.Uniform,
-                        Width = 200,
-                        Height = 200
+                        VerticalAlignment = VerticalAlignment.Stretch,
+                        HorizontalAlignment = HorizontalAlignment.Stretch
                     };
                     imageControl.Source = image;
                     Visualisation.Child = imageControl;
