@@ -1,7 +1,10 @@
 ﻿using AIStarter.Interfaces;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,13 +25,103 @@ namespace AIStarter.UI
     /// </summary>
     public partial class ControlInputSlot : UserControl, ISlot
     {
+        private string value = string.Empty;
+
         public string InputName { get; set; } = string.Empty;
-        public string Value { get; set; } = string.Empty;
+        public string Value
+        {
+            get
+            {
+                return value;
+            }
+
+            set
+            {
+                Visualisation.Child = null;
+                if (ResourceExists(value))
+                {
+                    TryVisualise(value);
+                }
+                this.value = value;
+                if (UrlTextBox.Text != value)
+                {
+                    UrlTextBox.Text = value;
+                }
+            }
+        }
+
+        private bool ResourceExists(string value)
+        {
+            if(File.Exists(value))
+            {
+                return true;
+            }
+            else if(value.StartsWith("http"))
+            {
+                var content = new HttpClient().GetAsync(value);
+                content.Wait();
+
+                if(content.Result.StatusCode == HttpStatusCode.OK)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private void TryVisualise(string resourcePath)
+        {            
+            if (File.Exists(resourcePath))
+            {
+                if(resourcePath.EndsWith(".png") || resourcePath.EndsWith(".jpg") || resourcePath.EndsWith(".jpeg"))
+                {
+                    var image = new BitmapImage(new Uri(resourcePath));
+                    var imageControl = new Image
+                    {
+                        Source = image,
+                        Stretch = Stretch.Uniform,
+                        Width = 200,
+                        Height = 200
+                    };
+                    imageControl.Source = image;
+                    Visualisation.Child = imageControl;
+                }                
+            }
+            else if (resourcePath.StartsWith("http"))
+            {
+                var content = new HttpClient().GetAsync(resourcePath);
+                content.Wait();
+
+                if (content.Result.StatusCode == HttpStatusCode.OK)
+                {
+                    var image = new BitmapImage(new Uri(resourcePath));
+                    var imageControl = new Image
+                    {
+                        Source = image,
+                        Stretch = Stretch.Uniform,
+                        Width = 200,
+                        Height = 200
+                    };
+                    imageControl.Source = image;
+                    Visualisation.Child = imageControl;
+                }                
+            }
+        }
+
         public string ValueJSONPath { get; set; } = string.Empty;
+
+        public bool ShowInputBar { get; set; } = true;
 
         public ControlInputSlot()
         {
             InitializeComponent();
+            Loaded += ControlInputSlot_Loaded;
+        }
+
+        private void ControlInputSlot_Loaded(object sender, RoutedEventArgs e)
+        {
+            InputBar.Visibility = ShowInputBar ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private void TextBox_Drop(object sender, DragEventArgs e)
@@ -50,6 +143,11 @@ namespace AIStarter.UI
                 e.Effects = DragDropEffects.Copy;
                 e.Handled = true;
             }
+        }
+
+        private void UrlTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            Value = UrlTextBox.Text;
         }
     }
 }
