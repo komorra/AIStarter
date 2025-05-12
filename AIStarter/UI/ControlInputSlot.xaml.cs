@@ -38,7 +38,7 @@ namespace AIStarter.UI
             set
             {
                 Visualisation.Child = null;
-                TryVisualise(value);
+                _ = TryVisualise(value);
                 this.value = value;
                 if (UrlTextBox.Text != value)
                 {
@@ -53,6 +53,7 @@ namespace AIStarter.UI
             {
                 if(resourcePath.EndsWith(".png") || resourcePath.EndsWith(".jpg") || resourcePath.EndsWith(".jpeg"))
                 {
+                    resourcePath = System.IO.Path.GetFullPath(resourcePath);
                     var image = new BitmapImage(new Uri(resourcePath));
                     var imageControl = new Image
                     {

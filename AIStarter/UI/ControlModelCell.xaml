@@ -29,6 +29,7 @@
                     </GroupBox>
                     <GridSplitter Grid.Column="1" Width="5" Background="#FF373737" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                     <GroupBox Name="Output" Header="Output" Grid.Column="2">
+                        <local:ControlInputSlot x:Name="OutputSlot" ShowInputBar="False"/>
                     </GroupBox>
                 </Grid>
             </TabItem>

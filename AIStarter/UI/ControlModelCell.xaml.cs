@@ -78,6 +78,8 @@ namespace AIStarter.UI
 
                 var result = await Inference.Run(dockerCommand, jsonInput.ToString(), prediction);
                 var outputFile = Inference.OutputDataToTempFile(result);
+
+                OutputSlot.Value = outputFile;  
             }
             Run.IsEnabled = true;
         }        
