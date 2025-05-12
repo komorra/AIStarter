@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace AIStarter.Core
@@ -69,7 +70,9 @@ namespace AIStarter.Core
                 Directory.CreateDirectory(outputDirectory);
             }
             var dataType = outputData.Split(';')[0].Split(':')[1].Trim();
-            var data = Convert.FromBase64String(outputData.Split(';')[1].Substring(7));
+            var dirty = outputData.Split(';')[1].Substring(7);
+            var cleaned = Regex.Replace(dirty, @"[^A-Za-z0-9\+/=]", string.Empty);
+            var data = Convert.FromBase64String(cleaned);
 
             var combinedPath = Path.Combine(outputDirectory, $"{DateTime.UtcNow.Ticks}{GetExtensionByDataType(dataType)}");
             File.WriteAllBytes(combinedPath, data);

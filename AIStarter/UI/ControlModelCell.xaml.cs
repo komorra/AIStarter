@@ -62,7 +62,36 @@ namespace AIStarter.UI
                 foreach (ISlot item in panel.Children)
                 {
                     var token = jsonInput.SelectToken(item.ValueJSONPath ?? string.Empty);
-                    token.Replace(SimpleHttpFileServer.ConvertToLocalhostIfNeeded(item.Value ?? string.Empty));
+                    var type = token?.Type.ToString() ?? string.Empty;
+
+                    var newValueAsString = SimpleHttpFileServer.ConvertToLocalhostIfNeeded(item.Value ?? string.Empty);
+
+                    JToken newToken;
+
+                    switch (type)
+                    {
+                        case "Integer":
+                            if (long.TryParse(newValueAsString, out var l)) newToken = new JValue(l);
+                            else newToken = JValue.CreateNull();
+                            break;
+                        case "Float":
+                            if (double.TryParse(newValueAsString, out var d)) newToken = new JValue(d);
+                            else newToken = JValue.CreateNull();
+                            break;
+                        case "Boolean":
+                            if (bool.TryParse(newValueAsString, out var b)) newToken = new JValue(b);
+                            else newToken = JValue.CreateNull();
+                            break;
+                        case "Null":
+                            newToken = JValue.CreateNull();
+                            break;
+                        case "String":
+                        default:
+                            newToken = new JValue(newValueAsString);
+                            break;
+                    }
+
+                    token?.Replace(newToken);
                 }
 
                 do

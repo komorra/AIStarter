@@ -187,7 +187,7 @@ namespace AIStarter.Core
             {
                 return url;
             }
-            else
+            else if(File.Exists(url))
             {
                 var target = Path.Combine(Instance.BaseDirectory, $"{DateTime.UtcNow.Ticks}{Path.GetExtension(url)}");
                 File.Copy(url, target, true);
@@ -196,6 +196,8 @@ namespace AIStarter.Core
 
                 return result;
             }
+
+            return url;
         }
     }
 
